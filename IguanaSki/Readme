@@ -1,0 +1,15 @@
+Oláá professor, Ramon aqui auhehuae.
+
+Fiz o jogo todo low poly.
+
+As árvores são geradas proceduralmente, as alturas variam aleatoriamente, as cores também variam de uma árvore pra outra e tem 3 tipos de layout dos andares das folhas do pinheiro.
+
+A e D controla se o personagem vai pra esquerda ou pra direita, ele sempre caminha pra frente e a velocidade vai aumentendo.
+
+Fiz um ciclo de dia e noite, o sol se põe e a cor do céu muda, consequentemente a cor dos objetos do mundo também da uma variada.
+
+Tentei fazer bonecos de neve andando como obstáculo mas não deu tempo.
+
+Dessa vez eu fiz o makefile, é só dar um /make q compila tudo.
+
+
