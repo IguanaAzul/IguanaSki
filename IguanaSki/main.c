@@ -45,7 +45,7 @@ double eyeX=0, eyeY=5, eyeZ=1, centerX=0, centerY=1, centerZ=20, upX=0, upY=1, u
 int slices = 32;
 int stacks = 32;
 
-double velocidadeZ = 0.07, aceleracaoZ = 0.000002, velocidadeX = 0, rotateZ = 0;
+double velocidadeZ = 0.07, aceleracaoZ = 0.000002, velocidadeX = 0, rotateZ = 0, rotCount = 3, velRotCount = 0.005, C=0;
 double porDoSol = 0, subindo = 0;
 
 Vetor origem = {0, 0, 0};
@@ -54,6 +54,7 @@ Vetor vj = {0, 1, 0};
 Vetor vk = {0, 0, 1};
 Vetor posicaoAtual = {0, 0, 0};
 Vetor corDoCeu = {0.3,0.5,1};
+Vetor rotArvore = {1, 0, 0};
 
 ListaEncadeadaArvores arvores;
 
@@ -180,7 +181,7 @@ void inicializa(void){
         posicaoArvore.y = 0;
         posicaoArvore.z = posicaoZArvore;
 
-        rotacaoArvore.x = rand()%15-100;
+        rotacaoArvore.x = rand()%30-15;
         rotacaoArvore.y = rand()%360-180;
         rotacaoArvore.z = rand()%30-15;
 
@@ -262,6 +263,9 @@ void desenhaArvore(Arvore *arvore){
     int i, tipo;
     tipo = arvore->tipo;
     for(i=1; i<arvore->altura; i++){
+    
+    glRotated(rotCount,rotArvore.x + arvore->rotacao.x/20,0,rotArvore.z + arvore->rotacao.z/20);
+
     glColor3f(0+i/(altura+1)+arvore->cor.x+corDoCeu.x/5, 0.3+i/(altura+1)+arvore->cor.y+corDoCeu.y/5, 0.05+i/(altura+1)+arvore->cor.z+corDoCeu.z/5);
     glBegin(GL_TRIANGLE_FAN); //base vista de baixo
         glVertex3f(-(altura-i)/3,  i, -(altura-i)/3);
@@ -434,13 +438,20 @@ void atualiza(int idx){
     tAnterior = glutGet(GLUT_ELAPSED_TIME);
     glLoadIdentity();
 
+    rotCount += velRotCount;
+    if(rotCount>4 || rotCount<2){velRotCount=-velRotCount;}
+    
+    C++;
+    rotArvore.x=cos(C/20);
+    rotArvore.z=sin(C/20);
+
     detectaColisoes();
     encontraArvoresPerdidas();
     gluLookAt(eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ);
 
     glPopMatrix();
     glutPostRedisplay();
-    glutTimerFunc(20, atualiza, 0);
+    glutTimerFunc(17, atualiza, 0);
 }
 
 void resize(int width, int height){
@@ -484,7 +495,7 @@ int main(int argc, char *argv[]){
     glutInitWindowPosition(10,10);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 
-    glutCreateWindow("");
+    glutCreateWindow("Almocreve");
 
     glutReshapeFunc(resize);
     glutDisplayFunc(desenhaCena);
