@@ -175,7 +175,6 @@ void inicializa(void){
     for(i=0; i<300; i++){
         posicaoXArvore=rand()%500-250;
         posicaoZArvore=rand()%600+120;
-        printf("%d %d %d \n", i, posicaoXArvore, posicaoZArvore);
 
         posicaoArvore.x = posicaoXArvore;
         posicaoArvore.y = 0;
@@ -203,7 +202,7 @@ void detectaColisoes(){
             velocidadeZ = 0.07;
 	    velocidadeX = 0;
             inicializa();
-            printf("Faliceu");
+            printf("Faliceu\n");
         }
         iterador = iterador->proximo;
     }
@@ -244,7 +243,6 @@ void encontraArvoresPerdidas(){
 
                 arvore = criaArvore(posicaoArvore, rand()%8+7, rand()%3+2,rotacaoArvore, cor);
                 adicionaArvore(&arvores, arvore);
-                printf(" aloooo %d %d \n", posicaoXArvore, posicaoZArvore);
             removeArvore(anterior,iterador);
         } else {
            anterior = iterador;
@@ -374,7 +372,7 @@ void desenhaCena(void){
         if(corDoCeu.x<=0 && corDoCeu.y<=0 && corDoCeu.z<=0 && porDoSol>200){
             porDoSol=-230;
         }
-    desenhaEsfera(posicaoEsfera, 120, 8, 8);
+    desenhaEsfera(posicaoEsfera, 120, 32, 32);
     desenhaMontanhas();
 
 
