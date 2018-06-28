@@ -45,7 +45,7 @@ double eyeX=0, eyeY=5, eyeZ=1, centerX=0, centerY=1, centerZ=20, upX=0, upY=1, u
 int slices = 32;
 int stacks = 32;
 
-double velocidadeZ = 0.07, aceleracaoZ = 0.000002, velocidadeX = 0, rotateZ = 0, rotCount = 3, velRotCount = 0.005, C=0;
+double velocidadeZ = 0.07, aceleracaoZ = 0.000002, velocidadeX = 0, rotateZ = 0, rotCount = 1.5, velRotCount = 0.005, C=0;
 double porDoSol = 0, subindo = 0;
 
 Vetor origem = {0, 0, 0};
@@ -389,6 +389,11 @@ void posiciona(){
     eyeX+=velocidadeX*(tAtual-tAnterior);
     velocidadeZ+=aceleracaoZ*(tAtual-tAnterior);
     porDoSol += velocidadeZ*(tAtual-tAnterior)/20;
+    rotCount += velRotCount*(tAtual-tAnterior)/50;
+    if(rotCount>3 || rotCount<1){velRotCount=-velRotCount;}
+    C++;
+    rotArvore.x=cos(C/20)*(tAtual-tAnterior);
+    rotArvore.z=sin(C/20)*(tAtual-tAnterior);
 }
 
 void comandos(){
@@ -435,13 +440,6 @@ void atualiza(int idx){
     comandos();
     tAnterior = glutGet(GLUT_ELAPSED_TIME);
     glLoadIdentity();
-
-    rotCount += velRotCount;
-    if(rotCount>4 || rotCount<2){velRotCount=-velRotCount;}
-    
-    C++;
-    rotArvore.x=cos(C/20);
-    rotArvore.z=sin(C/20);
 
     detectaColisoes();
     encontraArvoresPerdidas();
